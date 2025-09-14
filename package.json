@@ -12,8 +12,9 @@
   "author": "Next Level Web Development",
   "license": "ISC",
   "type": "commonjs",
-  "description": "",
+  "description": "A simple **Blog Application Starter Pack** built with **TypeScript, Express.js**.   This project is designed for the **Next Level Web Development Bootcamp** to help learners practice Prisma hands-on by building a blog platform.",
   "dependencies": {
+    "@prisma/client": "^6.16.1",
     "compression": "^1.8.1",
     "cors": "^2.8.5",
     "express": "^5.1.0",
@@ -24,7 +25,18 @@
     "@types/compression": "^1.8.1",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
-    "@types/node": "^24.2.0",
-    "dotenv": "^17.2.2"
-  }
+    "@types/node": "^24.4.0",
+    "dotenv": "^17.2.2",
+    "prisma": "^6.16.1",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Apollo-Level2-Web-Dev/next-blog-starter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Apollo-Level2-Web-Dev/next-blog-starter/issues"
+  },
+  "homepage": "https://github.com/Apollo-Level2-Web-Dev/next-blog-starter#readme"
 }
