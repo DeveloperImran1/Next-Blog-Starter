@@ -1,6 +1,8 @@
 import compression from "compression";
 import cors from "cors";
 import express from "express";
+import { postRouter } from "./modules/post/post.route";
+import { userRouter } from "./modules/user/user.route";
 
 const app = express();
 
@@ -9,6 +11,8 @@ app.use(cors()); // Enables Cross-Origin Resource Sharing
 app.use(compression()); // Compresses response bodies for faster delivery
 app.use(express.json()); // Parse incoming JSON requests
 
+app.use("/api/v1/user", userRouter);
+app.use("/api/v1/post", postRouter);
 app.use(
   cors({
     origin: "http://localhost:3000",
@@ -20,7 +24,6 @@ app.use(
 app.get("/", (_req, res) => {
   res.send("API is running");
 });
-
 
 // 404 Handler
 app.use((req, res, next) => {
