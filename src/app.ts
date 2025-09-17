@@ -1,6 +1,7 @@
 import compression from "compression";
 import cors from "cors";
 import express from "express";
+import { authRouter } from "./modules/auth/auth.route";
 import { postRouter } from "./modules/post/post.route";
 import { userRouter } from "./modules/user/user.route";
 
@@ -13,6 +14,7 @@ app.use(express.json()); // Parse incoming JSON requests
 
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/post", postRouter);
+app.use("/api/v1/auth", authRouter);
 app.use(
   cors({
     origin: "http://localhost:3000",

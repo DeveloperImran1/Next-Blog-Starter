@@ -1,0 +1,40 @@
+import { Prisma } from "@prisma/client";
+import { prisma } from "../../config/db";
+
+const loginWithEmail = async ({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) => {
+  const user = await prisma.user.findUnique({
+    where: {
+      email,
+    },
+  });
+  if (!user) {
+    throw new Error("User not exist!");
+  }
+
+  if (user.password === password) {
+    return user;
+  } else {
+    throw new Error("Credentials invalid");
+  }
+};
+
+const authWithGoogle = async (data: Prisma.UserCreateInput) => {
+  let user = await prisma.user.findUnique({
+    where: {
+      email: data.email,
+    },
+  });
+
+  if (!user) {
+    user = await prisma.user.create({ data });
+  }
+
+  return user;
+};
+export const AuthService = { loginWithEmail };
