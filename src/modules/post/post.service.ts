@@ -95,6 +95,56 @@ const getPostById = async (id: number) => {
   return result;
 };
 
+const getBlogPost = async () => {
+  return await prisma.$transaction(async (tx) => {
+    const aggregates = await tx.post.aggregate({
+      _count: true,
+      _sum: { views: true },
+      _avg: { views: true },
+      _min: { views: true },
+      _max: { views: true },
+    });
+
+    const featuredCount = await tx.post.count({
+      where: {
+        isFeatured: true,
+      },
+    });
+    const topFeatured = await tx.post.findFirst({
+      where: {
+        isFeatured: true,
+      },
+      orderBy: { views: "desc" },
+    });
+
+    const lastWeek = new Date();
+    lastWeek.setDate(lastWeek.getDate() - 7);
+
+    const lastWeekPostCoount = await tx.post.count({
+      where: {
+        createdAt: {
+          gte: lastWeek,
+        },
+      },
+    });
+
+    return {
+      stats: {
+        totalPost: aggregates._count ?? 0,
+        totalView: aggregates._sum.views ?? 0,
+        avgView: aggregates._avg.views ?? 0,
+        minView: aggregates._min.views ?? 0,
+        maxView: aggregates._max.views ?? 0,
+      },
+      featured: {
+        count: featuredCount,
+        topFeatured,
+      },
+      lastWeekPostCoount,
+    };
+  });
+};
+
 const updatePost = async (id: number, data: Partial<any>) => {
   return prisma.post.update({ where: { id }, data });
 };
@@ -109,4 +159,5 @@ export const PostService = {
   getPostById,
   updatePost,
   deletePost,
+  getBlogPost,
 };

@@ -48,6 +48,11 @@ const updatePost = async (req: Request, res: Response) => {
   res.json(post);
 };
 
+const getBlogPost = async (req: Request, res: Response) => {
+  const stats = await PostService.getBlogPost();
+  res.json(stats);
+};
+
 const deletePost = async (req: Request, res: Response) => {
   await PostService.deletePost(Number(req.params.id));
   res.json({ message: "Post deleted" });
@@ -59,4 +64,5 @@ export const PostController = {
   getPostById,
   updatePost,
   deletePost,
+  getBlogPost,
 };
